@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import {
-    TodosDashboardModule,
-    todosDashboardRoutes,
-} from '@nx-getting-started/todos/dashboard';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, TodosDashboardModule],
+    imports: [
+        BrowserModule,
+        RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
+    ],
     providers: [],
     bootstrap: [AppComponent],
 })
