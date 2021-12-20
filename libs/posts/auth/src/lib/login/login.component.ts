@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
-  selector: 'nx-getting-started-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'posts-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+    constructor(private authService: AuthService) {}
 
-  constructor() { }
+    public ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
+    public signIn(): void {
+        this.authService.login().subscribe({
+            next: (data) => {
+                console.log('auth', data);
+            },
+        });
+    }
 }
