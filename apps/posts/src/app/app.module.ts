@@ -8,7 +8,18 @@ import { RouterModule } from '@angular/router';
     declarations: [AppComponent],
     imports: [
         BrowserModule,
-        RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
+        RouterModule.forRoot(
+            [
+                {
+                    path: 'posts-auth',
+                    loadChildren: () =>
+                        import('@nx-getting-started/posts/auth').then(
+                            (module) => module.PostsAuthModule
+                        ),
+                },
+            ],
+            { initialNavigation: 'enabledBlocking' }
+        ),
     ],
     providers: [],
     bootstrap: [AppComponent],

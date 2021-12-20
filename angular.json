@@ -99,6 +99,32 @@
             },
             "tags": []
         },
+        "posts-auth": {
+            "projectType": "library",
+            "root": "libs/posts/auth",
+            "sourceRoot": "libs/posts/auth/src",
+            "prefix": "nx-getting-started",
+            "architect": {
+                "test": {
+                    "builder": "@nrwl/jest:jest",
+                    "outputs": ["coverage/libs/posts/auth"],
+                    "options": {
+                        "jestConfig": "libs/posts/auth/jest.config.js",
+                        "passWithNoTests": true
+                    }
+                },
+                "lint": {
+                    "builder": "@nrwl/linter:eslint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "libs/posts/auth/src/**/*.ts",
+                            "libs/posts/auth/src/**/*.html"
+                        ]
+                    }
+                }
+            },
+            "tags": []
+        },
         "posts-e2e": {
             "root": "apps/posts-e2e",
             "sourceRoot": "apps/posts-e2e/src",
