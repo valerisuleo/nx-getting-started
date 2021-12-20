@@ -1,7 +1,10 @@
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
 
-### What's Nx?
+
+## Section 1: Getting started
+
+> ### What's Nx?
 
 - Extension of Angular CLI
 - Created by former *Google* Devs
@@ -9,20 +12,26 @@
 	- workspaces
 	- Apps & libraries
 
-### Why Nx?
+> ### Why Nx?
 
 - We want to share data across multiple angular apps
 - To build very large enterprise apps
 - Help us in managing *Monorepo*
 - Makes easy to scale
 
+> ### Docs
+
+- [Nx Documentation](https://nx.dev/angular)
+- [10-minute video showing all Nx features](https://nx.dev/getting-started/intro)
+- [Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
 
 
-## Install Nx
+
+### Install Nx
 
 `npm install -g nx`
 
-## Create worspace
+### Create worspace
 
 `npx create-nx-workspace@latest`
 
@@ -61,7 +70,7 @@ for a dev server. Navigate to `http://localhost:4200/myappname`. The app will au
 },
 ```
 
-## Create an application
+## Section 2: Creating Apps
 
 Run `ng g @nrwl/angular:app my-app` to generate an application.
 
@@ -86,7 +95,7 @@ We can also pass custom params:
 - `enabledBlocking` - The initial navigation starts before the root component is created. The bootstrap is blocked until the initial navigation is complete. This value is required for server-side rendering to work.
 - `disabled` - The initial navigation is not performed. The location listener is set up before the root component gets created. Use if there is a reason to have more control over when the router starts its initial navigation due to some complex initialization logic.
 
-## Create a library
+## Section3: Creating Libs
 
 So far we have 2 apps (*todos* and *posts*) and now we wanna link a library to our *todos* app.
 
@@ -229,20 +238,98 @@ This `--lazy` will do a few thing for us behind the curtains:
 	
 	```
 
+Let's **make a component** for our *auth* lib:
+
+`ng g component login --project=auth` and update the `posts-auth.module.ts`:
+
+```
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        RouterModule.forChild([{ path: '', component: LoginComponent }]),
+    ],
+    declarations: [LoginComponent],
+})
+export class PostsAuthModule {}
+
+```
+
+Finally navigate to `/posts-auth` and you should see *login works!*
+
+
+## Section 4: Understand your Workspace
+
+### Adding Shared Library
+
+This is gonna be a peace of cake if you have already a good understanding of how to make and use reusable components! 
+
+1. Run `ng g @nrwl/angular:lib shared`
+2. Now let's add a reusable component to our shared lib: `ng g c bootstrap-card`
+	> We are gonna use bootstrap so run `npm i bootstrap --save`
+
+3. Let's add new routes to both our apps: `ng g c postsIndex` and `ng g c todosIndex`
+
+Ok it's time to add some markup to our card component
+
+```
+<div
+    class="card"
+    [style]="width"
+>
+    <ng-content select=".header"></ng-content>
+    <div class="card-body">
+        <ng-content select=".body"></ng-content>
+    </div>
+</div>
+```
+
+Let's invoke our card component inside our app!
+
+> How can I do that?
+
+Easy peasy Japanese! :)
+Simply remember to import the `shared.module.ts`
+
+
+```
+<p>todos-index works!</p>
+
+<bootstrap-card [width]="'width: 18rem;'">
+    <ng-container class="header">
+        <img
+            src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+            class="card-img-top"
+            alt="..."
+        >
+    </ng-container>
+    <ng-container class="body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a
+            href="#"
+            class="btn btn-primary"
+        >Go somewhere</a>
+    </ng-container>
+</bootstrap-card>
+```
+
+> Repeat the same operations for `PostsIndexComponent`.
+
+### Viewing Dependecy Graph
+
+Now that we have a basic structure in place we can run `nx dep-graph` to see a diagram of the dependencies of your projects.
 
 
 
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
 
 
-## Documentation
 
-[Nx Documentation](https://nx.dev/angular)
 
-[10-minute video showing all Nx features](https://nx.dev/getting-started/intro)
 
-[Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
 
 	

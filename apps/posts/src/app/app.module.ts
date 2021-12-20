@@ -2,25 +2,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { RouterModule } from '@angular/router';
+import { PostsIndexComponent } from './posts-index/posts-index.component';
+import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from 'libs/shared/src';
 
 @NgModule({
-    declarations: [AppComponent],
-    imports: [
-        BrowserModule,
-        RouterModule.forRoot(
-            [
-                {
-                    path: 'posts-auth',
-                    loadChildren: () =>
-                        import('@nx-getting-started/posts/auth').then(
-                            (module) => module.PostsAuthModule
-                        ),
-                },
-            ],
-            { initialNavigation: 'enabledBlocking' }
-        ),
-    ],
+    declarations: [AppComponent, PostsIndexComponent],
+    imports: [BrowserModule, AppRoutingModule, SharedModule],
     providers: [],
     bootstrap: [AppComponent],
 })

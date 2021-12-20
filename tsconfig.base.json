@@ -16,6 +16,7 @@
         "baseUrl": ".",
         "paths": {
             "@nx-getting-started/posts/auth": ["libs/posts/auth/src/index.ts"],
+            "@nx-getting-started/shared": ["libs/shared/src/index.ts"],
             "@nx-getting-started/todos/dashboard": [
                 "libs/todos/dashboard/src/index.ts"
             ]
